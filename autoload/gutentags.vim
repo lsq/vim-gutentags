@@ -77,7 +77,10 @@ function! gutentags#get_cachefile(root_dir, filename) abort
     if gutentags#is_path_rooted(a:filename)
         return a:filename
     endif
-    let l:tag_path = gutentags#stripslash(a:root_dir) . '/' . a:filename
+    " let l:tag_path = gutentags#stripslash(a:root_dir) . '/' . a:filename
+    let l:tag_path = gutentags#stripslash(substitute(system("cygpath -m " . a:root_dir),'\n','','')) . '/' . a:filename
+    " echom "gutentags: a:filename: " . a:filename . "root_dir: " . a:root_dir
+    " echom "gutentags: l:tag_path: " . l:tag_path
     if g:gutentags_cache_dir != ""
         " Put the tag file in the cache dir instead of inside the
         " project root.
